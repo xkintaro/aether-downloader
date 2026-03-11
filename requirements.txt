@@ -1,0 +1,5 @@
+yt-dlp
+rich
+questionary
+pyinstaller
+certifi

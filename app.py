@@ -86,7 +86,7 @@ def resource_path(relative_path: str) -> str:
 
 
 def get_download_path() -> str:
-    path = os.path.join(os.path.expanduser("~"), "Downloads", "aether-downloader")
+    path = os.path.join(os.path.expanduser("~"), "Downloads", "aether-downloads")
     os.makedirs(path, exist_ok=True)
     return path
 

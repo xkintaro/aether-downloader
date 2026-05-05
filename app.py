@@ -96,7 +96,7 @@ def clear() -> None:
 
 
 def generate_filename() -> str:
-    return f"{datetime.now().strftime('%d%m%Y%H%M%S%f')[:-3]}"
+    return f"{datetime.now().strftime('%Y%m%d%H%M%S%3f')[:-3]}"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #  UI COMPONENTS

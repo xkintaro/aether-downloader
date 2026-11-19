@@ -25,8 +25,10 @@ from rich.progress import (
 )
 from rich.text import Text
 from rich.align import Align
+from rich.console import Group
+from rich.constrain import Constrain
+from rich.rule import Rule
 from rich.table import Table
-from rich.columns import Columns
 from rich import box
 import questionary
 from questionary import Style
@@ -49,6 +51,8 @@ APP_VERSION = "1.0.0"
 
 console = Console()
 
+APP_WIDTH = 60
+
 AETHER_STYLE = Style([
     ('qmark', 'fg:#ff79c6 bold'),
     ('question', 'fg:#f8f8f2 bold'),
@@ -69,7 +73,7 @@ def update_ytdlp() -> None:
     console.print(Text("Updating yt-dlp, please wait...", style="dim italic"))
     try:
         subprocess.run(
-            [sys.executable, "-m", "pip", "install", "-U", "yt-dlp[default]"], 
+            [sys.executable, "-m", "pip", "install", "-U", "yt-dlp[default]"],
             check=True, 
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
@@ -78,14 +82,6 @@ def update_ytdlp() -> None:
     except Exception as e:
         console.print(Text(f"An error occurred while updating yt-dlp: {e}", style="red dim"))
     time.sleep(1.5)
-
-def resource_path(relative_path: str) -> str:
-    try:
-        base_path = sys._MEIPASS
-    except AttributeError:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
-
 
 def get_download_path() -> str:
     path = os.path.join(os.path.expanduser("~"), "Downloads", "aether-downloads")
@@ -104,82 +100,87 @@ def generate_filename() -> str:
 #  UI COMPONENTS
 # ═══════════════════════════════════════════════════════════════════════════════
 
-LOGO_ART = """[bold bright_magenta]
-     █████╗ ███████╗████████╗██╗  ██╗███████╗██████╗ 
-    ██╔══██╗██╔════╝╚══██╔══╝██║  ██║██╔════╝██╔══██╗
-    ███████║█████╗     ██║   ███████║█████╗  ██████╔╝
-    ██╔══██║██╔══╝     ██║   ██╔══██║██╔══╝  ██╔══██╗
-    ██║  ██║███████╗   ██║   ██║  ██║███████╗██║  ██║
-    ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝[/bold bright_magenta]"""
+LOGO_LINES = [
+    " █████╗ ███████╗████████╗██╗  ██╗███████╗██████╗ ",
+    "██╔══██╗██╔════╝╚══██╔══╝██║  ██║██╔════╝██╔══██╗",
+    "███████║█████╗     ██║   ███████║█████╗  ██████╔╝",
+    "██╔══██║██╔══╝     ██║   ██╔══██║██╔══╝  ██╔══██╗",
+    "██║  ██║███████╗   ██║   ██║  ██║███████╗██║  ██║",
+    "╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝",
+]
+
+
+def centered(renderable) -> Constrain:
+    return Constrain(Align.center(renderable), width=APP_WIDTH)
+
+
+def divider(title: str = "") -> Constrain:
+    return Constrain(Rule(title, characters="━", style="dim"), width=APP_WIDTH)
 
 
 def render_header() -> None:
-    console.print(LOGO_ART)
     console.print()
-    
-    console.print(
-        Text("━━━━━━━━━━━━━━━━ terminal media downloader ━━━━━━━━━━━━━━━━━", style="dim")
-    )
+    logo_width = max(len(line) for line in LOGO_LINES)
+    logo = "\n".join(line.ljust(logo_width) for line in LOGO_LINES)
+    console.print(centered(Text(logo, style="bold bright_magenta")))
     console.print()
-    
+    console.print(divider("[dim]terminal media downloader[/dim]"))
+    console.print()
+
     links_table = Table.grid(padding=(0, 3))
-    links_table.add_column(justify="center")
-    links_table.add_column(justify="center")
-    links_table.add_column(justify="center")
-    links_table.add_column(justify="center")
-    
+    for _ in range(4):
+        links_table.add_column(justify="center")
+
     links_table.add_row(
         f"[dim]github[/dim] [bright_magenta]→[/bright_magenta] [link={SOCIAL_LINKS['github']}]{SOCIAL_LINKS['github'].split('/')[-1]}[/link]",
         f"[dim]repo[/dim] [bright_magenta]→[/bright_magenta] [link={SOCIAL_LINKS['repo']}]source[/link]",
         f"[dim]discord[/dim] [bright_magenta]→[/bright_magenta] [link={SOCIAL_LINKS['discord']}]join[/link]",
         f"[dim]v{APP_VERSION}[/dim]",
     )
-    
-    console.print(links_table)
+
+    console.print(centered(links_table))
     console.print()
-    console.print(Text("━" * 60, style="dim"))
+    console.print(divider())
     console.print()
+
+
+def render_result(heading: Text, lines: list[Text], border_style: str) -> None:
+    console.print()
+    body = Group(
+        Text(""),
+        heading,
+        Text(""),
+        *lines,
+        Text(""),
+    )
+    console.print(Panel(body, box=box.SQUARE, border_style=border_style, width=APP_WIDTH))
 
 
 def render_success(title: str, details: str, location: str) -> None:
-    console.print()
-    
-    inner_content = Table.grid(padding=(0, 0))
-    inner_content.add_column(justify="center")
-    inner_content.add_row("")
-    inner_content.add_row("[bold bright_green]┌────────────────────────────────────────┐[/bold bright_green]")
-    inner_content.add_row("[bold bright_green]│[/bold bright_green]         [bold white]✓ DOWNLOAD COMPLETE[/bold white]         [bold bright_green]│[/bold bright_green]")
-    inner_content.add_row("[bold bright_green]└────────────────────────────────────────┘[/bold bright_green]")
-    inner_content.add_row("")
-    inner_content.add_row(f"[white]{title[:50]}{'...' if len(title) > 50 else ''}[/white]")
-    inner_content.add_row(f"[dim]{details}[/dim]")
-    inner_content.add_row("")
-    inner_content.add_row(f"[dim bright_black]saved to {location}[/dim bright_black]")
-    inner_content.add_row("")
-    
-    console.print(inner_content)
+    render_result(
+        Text("✓ DOWNLOAD COMPLETE", style="bold white", justify="center"),
+        [
+            Text(title, style="white", justify="center", no_wrap=True, overflow="ellipsis"),
+            Text(details, style="dim", justify="center"),
+            Text(""),
+            Text(f"saved to {location}", style="dim bright_black", justify="center", overflow="fold"),
+        ],
+        "bold bright_green",
+    )
 
 
 def render_error(message: str) -> None:
-    console.print()
-    
-    error_content = Table.grid(padding=(0, 0))
-    error_content.add_column(justify="center")
-    error_content.add_row("")
-    error_content.add_row("[bold red]┌────────────────────────────────────────┐[/bold red]")
-    error_content.add_row("[bold red]│[/bold red]             [bold white]✗ ERROR[/bold white]                  [bold red]│[/bold red]")
-    error_content.add_row("[bold red]└────────────────────────────────────────┘[/bold red]")
-    error_content.add_row("")
-    error_content.add_row(f"[white]{message[:60]}[/white]")
-    error_content.add_row("")
-    
-    console.print(error_content)
+    render_result(
+        Text("✗ ERROR", style="bold white", justify="center"),
+        [Text(message, style="white", justify="center", overflow="fold")],
+        "bold red",
+    )
 
 
 def render_analyzing(url: str) -> None:
     console.print()
     console.print(Text("analyzing", style="dim italic"))
-    console.print(Text(url[:60] + ('...' if len(url) > 60 else ''), style="bright_white"))
+    console.print(Constrain(Text(url, style="bright_white", no_wrap=True, overflow="ellipsis"), width=APP_WIDTH))
     console.print()
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -208,18 +209,20 @@ class Aether:
                     console=console
                 )
                 self._progress.start()
-                self._task_id = self._progress.add_task("connecting", total=100)
+                self._task_id = self._progress.add_task("connecting", total=None)
 
             downloaded = data.get('downloaded_bytes', 0)
             total = data.get('total_bytes') or data.get('total_bytes_estimate', 0)
-            
+
             if total > 0:
-                pct = (downloaded / total) * 100
-                self._progress.update(self._task_id, description="downloading", completed=pct)
+                info = data.get('info_dict') or {}
+                description = "downloading audio" if info.get('vcodec') == 'none' else "downloading video"
+                self._progress.update(self._task_id, description=description, total=total, completed=downloaded)
 
         elif status == 'finished':
             if self._progress:
-                self._progress.update(self._task_id, description="processing", completed=100)
+                task = self._progress.tasks[0]
+                self._progress.update(self._task_id, completed=task.total or task.completed)
                 self._progress.stop()
                 self._progress = None
 

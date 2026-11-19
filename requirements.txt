@@ -3,5 +3,4 @@ deno
 imageio-ffmpeg
 rich
 questionary
-pyinstaller
 certifi

@@ -28,14 +28,13 @@
     <a href="#features">Özellikler</a> •
     <a href="#tech">Teknolojiler</a> •
     <a href="#setup">Kurulum</a> •
+    <a href="#gallery">Galeri</a> •
     <a href="#license">Lisans</a>
   </p>
 
   <br />
   <br />
 </div>
-
-<img src="md/20260311183406241.jpg" width="100%" />
 
 ## <a id="about"></a> 📋 Hakkında
 
@@ -92,6 +91,10 @@ En iyi görüntü ve ses akışları ayrı ayrı indirilip FFmpeg ile birleştir
 - Bir video bağlantısı yapıştırıp Enter tuşuna basın. İndirme hemen başlar.
 - Videolar, kullanıcı klasörünüzdeki `Downloads/aether-downloads` klasörüne kaydedilir.
 - Uygulamayı kapatmak için `exit`, `q` veya `quit` yazın.
+
+## <a id="gallery"></a> 🖼️ Galeri
+
+<img src="md/20260311183406241.jpg" />
 
 ## <a id="license"></a> 📄 Lisans
 

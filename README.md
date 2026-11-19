@@ -28,14 +28,13 @@
     <a href="#features">Features</a> •
     <a href="#tech">Tech</a> •
     <a href="#setup">Setup</a> •
+    <a href="#gallery">Gallery</a> •
     <a href="#license">License</a>
   </p>
 
   <br />
   <br />
 </div>
-
-<img src="md/20260311183406241.jpg" width="100%" />
 
 ## <a id="about"></a> 📋 About
 
@@ -92,6 +91,10 @@ The best video and audio streams are downloaded separately and merged with FFmpe
 - Paste a video link and press Enter. The download starts right away.
 - Videos are saved in the `Downloads/aether-downloads` folder inside your user folder.
 - Type `exit`, `q` or `quit` to close the application.
+
+## <a id="gallery"></a> 🖼️ Gallery
+
+<img src="md/20260311183406241.jpg" />
 
 ## <a id="license"></a> 📄 License
 

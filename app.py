@@ -9,6 +9,8 @@ import os
 import time
 import subprocess
 from datetime import datetime
+import deno
+import imageio_ffmpeg
 from yt_dlp import YoutubeDL
 from rich.console import Console
 from rich.panel import Panel
@@ -67,7 +69,7 @@ def update_ytdlp() -> None:
     console.print(Text("Updating yt-dlp, please wait...", style="dim italic"))
     try:
         subprocess.run(
-            [sys.executable, "-m", "pip", "install", "-U", "yt-dlp"], 
+            [sys.executable, "-m", "pip", "install", "-U", "yt-dlp[default]"], 
             check=True, 
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
@@ -221,6 +223,10 @@ class Aether:
                 self._progress.stop()
                 self._progress = None
 
+    def _postprocessor_hook(self, data: dict) -> None:
+        if data.get('status') == 'started' and data.get('postprocessor') == 'Merger':
+            console.print(Text("merging video and audio...", style="dim italic"))
+
     def _cleanup_progress(self) -> None:
         if self._progress:
             self._progress.stop()
@@ -230,10 +236,15 @@ class Aether:
         filename = generate_filename()
         
         opts = {
-            'format': 'best',
+            'format': 'bv*+ba/b',
+            'format_sort': ['res', 'vcodec:h264', 'acodec:m4a'],
+            'js_runtimes': {'deno': {'path': deno.find_deno_bin()}},
+            'ffmpeg_location': imageio_ffmpeg.get_ffmpeg_exe(),
             'outtmpl': f'{self.download_path}/{filename}.%(ext)s',
             'progress_hooks': [self._progress_hook],
+            'postprocessor_hooks': [self._postprocessor_hook],
             'quiet': True,
+            'noprogress': True,
             'no_warnings': True,
             'restrictfilenames': True,
             'merge_output_format': 'mp4',

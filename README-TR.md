@@ -1,9 +1,8 @@
 <a href="README.md">
   <img src="https://img.shields.io/badge/Language-English-blue?style=flat-square&logo=google-translate&logoColor=white" alt="English">
 </a>
-
 <a href="README-TR.md">
-  <img src="https://img.shields.io/badge/Dil-Türkçe-red?style=flat-square&logo=google-translate&logoColor=white" alt="Türkçe">
+  <img src="https://img.shields.io/badge/Language-Türkçe-red?style=flat-square&logo=google-translate&logoColor=white" alt="Türkçe">
 </a>
 
   <br />
@@ -15,84 +14,88 @@
   <br />
 
   <p>
-    Kullanımı kolay ve güzel bir komut satırı video indirme programı.
+     Videoları en iyi kalitede MP4 olarak indiren bir terminal aracı.
   </p>
 
-  ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-  ![Rich](https://img.shields.io/badge/Rich-000000?style=for-the-badge&logo=python&logoColor=white)
-  ![yt-dlp](https://img.shields.io/badge/yt--dlp-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
-  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Rich](https://img.shields.io/badge/Rich-000000?style=for-the-badge&logo=python&logoColor=white)
+![yt-dlp](https://img.shields.io/badge/yt--dlp-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
   <p>
+    <a href="#about">Hakkında</a> •
     <a href="#features">Özellikler</a> •
-    <a href="#technologies">Teknolojiler</a> •
-    <a href="#installation">Kurulum</a> •
-    <a href="#license">Lisans</a> •
-    <a href="#gallery">Galeri</a>
+    <a href="#tech">Teknolojiler</a> •
+    <a href="#setup">Kurulum</a> •
+    <a href="#license">Lisans</a>
   </p>
 
   <br />
   <br />
 </div>
 
-## 📋 Hakkında
+<img src="md/20260311183406241.jpg" width="100%" />
 
-**Aether Downloader**, YouTube, TikTok ve daha fazlası gibi platformlardan kolayca video indirmenize olanak tanıyan, Python ile oluşturulmuş modern ve akıcı bir komut satırı uygulamasıdır. Arka planda `yt-dlp`'nin gücünü kullanır ve `rich` ile `questionary` kütüphanelerini kullanarak güzel, duyarlı bir terminal arayüzü sunar.
+## <a id="about"></a> 📋 Hakkında
 
-<img src="md/20260311183406241.jpg" width="100%" style="border-radius: 8px;" />
+**Aether Downloader**, tek bir bağlantıyla video indiren bir terminal uygulamasıdır. YouTube, X, Instagram, TikTok veya yt-dlp'nin desteklediği başka bir siteden bir bağlantı yapıştırın, video mevcut en iyi kalitede MP4 dosyası olarak kaydedilsin.
+
+En iyi görüntü ve ses akışları ayrı ayrı indirilip FFmpeg ile birleştirilir. Böylece 1080p ve 4K gibi yüksek çözünürlükler, daha düşük kaliteli tek dosya biçimleriyle sınırlı kalmaz. FFmpeg ve YouTube'un artık gerektirdiği Deno çalışma ortamı `pip` ile birlikte kurulur, ayrıca bir şey kurmanız gerekmez. İndirme ilerlemesi, dosya boyutu, hız ve kalan süre terminalde anlık olarak gösterilir.
 
 ## <a id="features"></a> ✨ Özellikler
 
-### Basit Video İndirme
-- **Tek Adımlı İşlem**: Sadece video URL'sini yapıştırın ve Enter'a basın. Uygulama, videoyu mevcut en iyi kalitede otomatik olarak indirir.
-- **Geniş Platform Desteği**: YouTube, TikTok, Instagram ve `yt-dlp` ile uyumlu diğer tüm platformları destekler.
+- **Geniş site desteği**: YouTube, X, Instagram, TikTok ve yt-dlp'nin desteklediği diğer pek çok siteden video indirin.
+- **En iyi kalitede MP4**: En iyi görüntü ve ses tek bir MP4 dosyasında birleştirilir. Dosyanın her yerde oynatılabilmesi için aynı çözünürlükte H.264 tercih edilir.
+- **Anlık ilerleme**: Görüntü ve ses indirmelerini boyut, hız ve kalan süre bilgisiyle kendi ilerleme çubuklarında takip edin.
+- **Net sonuçlar**: İndirme tamamlandığında video başlığı ve kayıt konumu, başarısız olduğunda ise hata mesajının tamamı gösterilir.
+- **Her zaman güncel**: yt-dlp, uygulama her başladığında otomatik olarak güncellenir.
+- **Ek kurulum gerekmez**: FFmpeg ve Deno, Python paketi olarak diğer bağımlılıklarla birlikte kurulur.
 
-### Şık Terminal Arayüzü
-- **Zengin Çıktı**: Renkli, sezgisel ve modern bir komut satırı deneyiminin keyfini çıkarın.
-- **İlerleme Takibi**: Dosya boyutu, indirme hızı ve tahmini varış süresi (ETA) dahil olmak üzere ayrıntılı bilgiler içeren gerçek zamanlı, akıcı indirme ilerleme çubuğu.
+## <a id="tech"></a> 🛠️ Teknolojiler
 
-### Hızlandırılmış İş Akışı
-- **Otomatik Güncelleme**: Uygulama, maksimum uyumluluk sağlamak için `yt-dlp`'yi otomatik olarak kontrol edebilir ve güncelleyebilir.
-- **Hızlı Kontroller**: `exit`, `q`, `quit` yazarak veya giriş alanını boş bırakarak uygulamadan kolayca çıkın.
-- **Otomatik Klasör Yönetimi**: İndirmeler, çalışma dizini içindeki özel bir `Downloads` klasörüne otomatik olarak kaydedilir.
+`Python` · `yt-dlp` · `Rich` · `questionary` · `Deno` · `FFmpeg`
 
-## <a id="technologies"></a> 🛠️ Teknolojiler
+## <a id="setup"></a> 🚀 Kurulum
 
-- **Python**: Projenin mantığını ve işleyişini oluşturan temel programlama dili.
-- **yt-dlp**: YouTube ve benzeri sitelerden video/ses indirme işlemlerini gerçekleştiren motor.
-- **rich**: Terminal ekranında renkli çıktılar, ilerleme çubukları ve estetik tablolar oluşturur.
-- **questionary**: Kullanıcıyla terminal üzerinden etkileşimli ve şık seçim menüleri kurulmasını sağlar.
-- **certifi**: Güvenli bağlantılar için gerekli olan SSL sertifika doğrulama paketidir.
-- **pyinstaller**: Python kodlarını son kullanıcı için taşınabilir bir çalıştırılabilir (.exe) dosyasına dönüştürür.
+### Gereksinimler
 
-## <a id="installation"></a> 🚀 Kurulum
+- **Python 3.10 veya üstü**
 
-1. **Depoyu klonlayın:**
+### Adım Adım Kurulum
+
+1. **Depoyu klonlayın**
 
    ```bash
    git clone https://github.com/xkintaro/aether-downloader.git
    cd aether-downloader
    ```
 
-2. **Bağımlılıkları yükleyin:**
+2. **Bağımlılıkları yükleyin**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Uygulamayı çalıştırın:**
+   Windows'ta bunun yerine `install-requirements.bat` dosyasını çalıştırabilirsiniz. `requirements.txt` her değiştiğinde bu adımı tekrarlayın.
+
+3. **Uygulamayı başlatın**
 
    ```bash
    python app.py
    ```
 
-## 📄 Lisans <a id="license"></a>
+   Windows'ta bunun yerine `run.bat` dosyasını çalıştırabilirsiniz.
 
-Bu proje MIT Lisansı altında lisanslanmıştır. Ayrıntılar için [LICENSE](LICENSE) dosyasını inceleyebilirsiniz.
+### Kullanım
 
-## 🖼️ Galeri <a id="gallery"></a>
+- Bir video bağlantısı yapıştırıp Enter tuşuna basın. İndirme hemen başlar.
+- Videolar, kullanıcı klasörünüzdeki `Downloads/aether-downloads` klasörüne kaydedilir.
+- Uygulamayı kapatmak için `exit`, `q` veya `quit` yazın.
 
-<img src="md/20260311183406319.jpg" width="100%" style="border-radius: 8px;" />
+## <a id="license"></a> 📄 Lisans
+
+Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
 
 #
 
